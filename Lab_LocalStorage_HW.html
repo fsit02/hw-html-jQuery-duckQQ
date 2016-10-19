@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>LocalStorage Lab</title>
-<script></script>
+<script type="text/javascript" src="jquery-1.9.1.min.js"></script>
 
 <style type="text/css">
 body {
@@ -71,7 +71,7 @@ fieldset .submit {
 	<H1>實作 HTML5 的 LocalStorage 功能</H1>
 	<p>輸入表單資料，不要按下「Send」送出，關閉瀏覽器，然後重新回到本頁，自動回復先前輸入的內容。</p>
 
-	<form method="post" action="http://exec.hostzi.com/echo.php">
+	<form method="post" action="clear.html">
 
 		<fieldset>
 			<legend>Contact Details</legend>
@@ -85,14 +85,42 @@ fieldset .submit {
 			</ol>
 
 			<input id="btnSubmit" name="btnSubmit" type="submit" class="submit"
-				value="Send" />
+				value="Clear" />
 
 		</fieldset>
 
 	</form>
 
 <span id="test"></span>
+<div id="debug">.........</div>
+<script>
+	//每次網頁ready就執行 readAndShow
+	$(document).ready(readAndShow);
+	
+	//只要輸入區域內的內容改變，就執行doChange把值存到相對的名稱中
+	$(".formFields").keyup(doChange);
+	//get local input change
+	function doChange() {
+		localStorage.setItem(this.name, this.value);
+	}
+	
+	//read
+		function readAndShow() {
+		if (localStorage["txtName"])
+			$("#txtName").val(localStorage["txtName"]);
+		if (localStorage["txtEmail"])
+			$("#txtEmail").val(localStorage["txtEmail"]);
+		if (localStorage["txtPhone"])
+			$("#txtPhone").val(localStorage["txtPhone"]);
+	}
+	//clear
+	$("form").submit(function () {
+			localStorage.clear();
+	});
+	
 
+
+</script>
 
 </body>
 </html>
